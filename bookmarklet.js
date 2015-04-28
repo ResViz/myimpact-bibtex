@@ -87,6 +87,8 @@
         autofill('BibDropDownList','2');
         autofill('VolumeTextBox_I',bib.entryTags.volume);
         autofill('AbstractTextBox_DesignIFrame',bib.entryTags.abstract);
+        //autofill('ISSN_PrintTextBox',bib.entryTags.issn); // which one?
+        //autofill('ISSN_ElectronicTextBox',bib.entryTags.issn); // which one?
         
         return false;
     }

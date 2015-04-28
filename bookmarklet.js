@@ -50,12 +50,14 @@
         var new_authors = [];
         for (var i=0; i<authors.length; i++) {
             // split author names by space
-            // keep only first letter of name parts > 0
-            var nameparts = authors[i].split(/[\. ]+/);
-            new_authors[i] = nameparts[0] + ' '; // first name plus space
-            for (var j=1; j<nameparts.length; j++) {
-                //new_authors[i] = new_authors[i] + ' ' + nameparts[j][0];
-                new_authors[i] = new_authors[i] + nameparts[j][0];
+            var lastfirst = authors[i].split(/, */,2);
+            new_authors[i] = lastfirst[0] + ', '; // 'LASTNAME, '
+            var firsts = lastfirst[1].split(/[\. ]+/);
+            for (var j=0; j<firsts.length; j++) {
+                // keep only first letter of name parts > 0
+                if (firsts[j][0]) {
+                    new_authors[i] = new_authors[i] + firsts[j][0];
+                }
             }
         }
         authors = new_authors.join('; ');
@@ -74,7 +76,7 @@
         autofill('AuthorsTextBox_I',authors);
         autofill('TitleTextBox_DesignIFrame',bib.entryTags.title);
         autofill('YearDropDownList',bib.entryTags.year);
-        autofill('JournalTextBox_I',bib.entryTags.booktitle);
+        autofill('JournalTextBox_I',bib.entryTags.journal || bib.entryTags.booktitle);
         autofill('ISBNTextBox_I',bib.entryTags.isbn);
         autofill('Place_PublishedTextBox_I',bib.entryTags.location);
         autofill('PaginationTextBox_I',bib.entryTags.pages);
@@ -84,6 +86,7 @@
         autofill('KeywordsTextBox',bib.entryTags.keywords);
         autofill('BibDropDownList','2');
         autofill('VolumeTextBox_I',bib.entryTags.volume);
+        autofill('AbstractTextBox_DesignIFrame',bib.entryTags.abstract);
         
         return false;
     }

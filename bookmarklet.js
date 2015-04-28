@@ -26,9 +26,9 @@
         
         // Springer has invalid BibTeX entries!
         // http://sourceforge.net/p/bibdesk/feature-requests/812/
-        if (bib.match(/^@[^{]+\{([^,]+)/)[1].match('=')) {
+        if (bib.match(/^\s*@[^{]+\{([^,]+)/)[1].match('=')) {
             // found a property before first comma, insert a fake 'KEY'
-            bib = bib.replace(/^(@[^{]+\{)([^,]+)/,'$1KEY,$2');
+            bib = bib.replace(/^\s*(@[^{]+\{)([^,]+)/,'$1KEY,$2');
         }
         
         //console.log(bib);
@@ -36,6 +36,11 @@
         //console.log(entries);
         bib = bibtexParse.toJSON(bib)[0];
         //console.log(bib);
+        
+        // force lowercase keys
+        for (var k in bib.entryTags) {
+            bib.entryTags[k.toLowerCase()] = bib.entryTags[k];
+        }
         
         // removed: detect and set Reference Type
         /*$type = $('#ctl00_ContentList_PublicationFormControl_cboReferenceType');
